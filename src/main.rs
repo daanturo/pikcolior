@@ -1,10 +1,10 @@
+use arboard::Clipboard;
 use ashpd::desktop::Color;
 use clap::Parser;
-use cli_clipboard;
 use futures::executor;
 
 #[derive(Parser, Debug)]
-#[command(version, about = "Simple CLI color picker")]
+#[command(version, about = "Simple CLI color picker that prints RGB hex code.")]
 struct Cli {
     /// Copy to the clipboard
     #[arg(short, long, default_value_t = false)]
@@ -37,8 +37,10 @@ fn main() {
     println!("{}", color_code);
 
     if argv.copy {
-        cli_clipboard::set_contents(color_code.to_owned()).unwrap();
-        cli_clipboard::get_contents().unwrap();
-        assert_eq!(cli_clipboard::get_contents().unwrap(), color_code);
+        let mut clipboard = Clipboard::new().unwrap();
+        clipboard.set_text(color_code.clone()).unwrap();
+        // Staying alive a little bit after setting the clipboard
+        clipboard.get_text().unwrap();
+        assert_eq!(clipboard.get_text().unwrap(), color_code);
     }
 }
