@@ -6,6 +6,8 @@ edition = "2021"
 [dependencies]
 ashpd = "0.9.1"
 futures = "0.3.30"
+# copypasta = "0.10.1"
+# arboard = { version = "3.4.0", features = ["wayland-data-control"] }
 # tokio = { version = "1.39.2", features = ["full"] }
 
 # [dependencies.async-std]

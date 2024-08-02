@@ -18,5 +18,6 @@ fn main() {
     let R = (color.0 * max_val).round() as i16;
     let G = (color.1 * max_val).round() as i16;
     let B = (color.2 * max_val).round() as i16;
-    println!("#{:X}{:X}{:X}", R, G, B);
+    let color_code = format!("#{:02X}{:02X}{:02X}", R, G, B);
+    println!("{}", color_code);
 }
