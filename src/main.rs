@@ -1,6 +1,15 @@
 use ashpd::desktop::Color;
+use clap::Parser;
 use cli_clipboard;
 use futures::executor;
+
+#[derive(Parser, Debug)]
+#[command(version, about = "Simple CLI color picker")]
+struct Cli {
+    /// Copy to the clipboard
+    #[arg(short, long, default_value_t = false)]
+    copy: bool,
+}
 
 fn pick_color() -> (f64, f64, f64) {
     let color = executor::block_on(Color::pick().send())
@@ -17,6 +26,8 @@ fn main() {
     // 256
     let max_val = 0x100 as f64;
 
+    let argv = Cli::parse();
+
     let color = pick_color();
     let R = (color.0 * max_val).round() as i16;
     let G = (color.1 * max_val).round() as i16;
@@ -25,6 +36,8 @@ fn main() {
 
     println!("{}", color_code);
 
-    cli_clipboard::set_contents(color_code.to_owned()).unwrap();
-    assert_eq!(cli_clipboard::get_contents().unwrap(), color_code);
+    if argv.copy {
+        cli_clipboard::set_contents(color_code.to_owned()).unwrap();
+        assert_eq!(cli_clipboard::get_contents().unwrap(), color_code);
+    }
 }
