@@ -38,6 +38,7 @@ fn main() {
 
     if argv.copy {
         cli_clipboard::set_contents(color_code.to_owned()).unwrap();
+        cli_clipboard::get_contents().unwrap();
         assert_eq!(cli_clipboard::get_contents().unwrap(), color_code);
     }
 }
