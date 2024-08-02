@@ -40,5 +40,6 @@ fn main() {
         let mut clipboard = Clipboard::new().unwrap();
         clipboard.set_text(color_code.clone()).unwrap();
         assert_eq!(clipboard.get_text().unwrap(), color_code);
+        clipboard.get_text().unwrap();
     }
 }
