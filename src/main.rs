@@ -1,6 +1,6 @@
+use arboard::Clipboard;
 use ashpd::desktop::Color;
 use clap::Parser;
-use cli_clipboard;
 use futures::executor;
 
 #[derive(Parser, Debug)]
@@ -37,7 +37,8 @@ fn main() {
     println!("{}", color_code);
 
     if argv.copy {
-        cli_clipboard::set_contents(color_code.to_owned()).unwrap();
-        assert_eq!(cli_clipboard::get_contents().unwrap(), color_code);
+        let mut clipboard = Clipboard::new().unwrap();
+        clipboard.set_text(color_code.clone()).unwrap();
+        assert_eq!(clipboard.get_text().unwrap(), color_code);
     }
 }
