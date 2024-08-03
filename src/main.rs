@@ -2,6 +2,7 @@ use arboard::Clipboard;
 use ashpd::desktop::Color;
 use clap::Parser;
 use futures::executor;
+use std::cmp::min;
 
 #[derive(Parser, Debug)]
 #[command(version, about = "Simple CLI color picker that prints RGB hex code.")]
@@ -16,23 +17,27 @@ fn pick_color() -> (f64, f64, f64) {
         .unwrap()
         .response()
         .unwrap();
-    let r = color.red();
-    let g = color.green();
-    let b = color.blue();
-    (r, g, b)
+    let r_f = color.red();
+    let g_f = color.green();
+    let b_f = color.blue();
+    (r_f, g_f, b_f)
 }
 
 fn main() {
     // 256
-    let max_val = 0x100 as f64;
+    let hex_ceil = 0x100 as f64;
+    // 0xFF
+    let hex_max = (hex_ceil - 1.0) as i16;
 
     let argv = Cli::parse();
 
     let color = pick_color();
-    let R = (color.0 * max_val).round() as i16;
-    let G = (color.1 * max_val).round() as i16;
-    let B = (color.2 * max_val).round() as i16;
-    let color_code = format!("#{:02X}{:02X}{:02X}", R, G, B);
+
+    let r_i = min((color.0 * hex_ceil).round() as i16, hex_max);
+    let g_i = min((color.1 * hex_ceil).round() as i16, hex_max);
+    let b_i = min((color.2 * hex_ceil).round() as i16, hex_max);
+
+    let color_code = format!("#{:02X}{:02X}{:02X}", r_i, g_i, b_i);
 
     println!("{}", color_code);
 
