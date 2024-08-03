@@ -5,7 +5,10 @@ use futures::executor;
 use std::cmp::min;
 
 #[derive(Parser, Debug)]
-#[command(version, about = "Simple CLI color picker that prints RGB hex code.")]
+#[command(
+    version,
+    about = "A simple CLI screen color picker that prints the RGB hex code."
+)]
 struct Cli {
     /// Copy to the clipboard
     #[arg(short, long, default_value_t = false)]
