@@ -1,17 +1,18 @@
 <h1 align="center">
-    Pikcolior: an extreme simple Linux CLI screen color picker
+    Pikcolior: an very simple Linux CLI screen color picker
 </h1>
 
 
 # About
 
 ```
-A simple CLI screen color picker that prints the RGB hex code.
+A simple CLI screen color picker that prints the color code.
 
 Usage: pikcolior [OPTIONS]
 
 Options:
-  -c, --copy     Copy to the clipboard
+  -c, --copy             Copy to the clipboard
+  ...
 ```
 
 Pikcolior works on Wayland. Just run the command to invoke the XDG color picker portal, then the #6-letter code will be printed. 
@@ -42,7 +43,7 @@ Currently Pikcolior doesn't have its own icon. Create this file:
 [Desktop Entry]
 Name=Pikcolior
 GenericName=Screen color picker
-Comment=Pick screen color and copy RGB hex code to the clipboard
+Comment=Pick screen color and copy its RGB hex code
 Exec=pikcolior -c
 Icon=color-picker
 Type=Application
