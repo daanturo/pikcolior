@@ -24,34 +24,17 @@ No fancy GUI, Pikcolior tries to stay out of your sight.
 
 # Installing
 
+## From source
+
 Make sure you have [Rust and Cargo](https://www.rust-lang.org/tools/install) installed.
 
-## Using cargo install
-
 ```bash
-cargo install --git https://gitlab.com/daanturo/pikcolior --branch stable
+git clone --depth=1 https://gitlab.com/daanturo/pikcolior --branch stable
+cd pikcolior
+
+make
+
 ```
-
-## Add a launcher
-
-Currently Pikcolior doesn't have its own icon. Create this file:
-
-`~/.local/share/applications/Pikcolior.desktop` (you may need to make it executable `chmod u+x Pikcolior.desktop`)
-
-
-```conf
-[Desktop Entry]
-Name=Pikcolior
-GenericName=Screen color picker
-Comment=Pick screen color and copy its RGB hex code
-Exec=pikcolior -c
-Icon=color-picker
-Type=Application
-NoDisplay=false
-Terminal=false
-```
-
-Launch and pin it on your Launcher/Dash/Start Menu/Taskbar for quick access, if you want.
 
 
 # Notable dependencies

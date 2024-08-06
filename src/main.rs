@@ -25,7 +25,7 @@ enum PrintFormat {
     Hex,
     /// #RRRRGGGGBBBB
     Hex16,
-    /// red.float green.float blue.float
+    /// R.float G.float B.float
     Float,
 }
 

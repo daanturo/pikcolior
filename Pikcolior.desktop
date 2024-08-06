@@ -1,0 +1,13 @@
+[Desktop Entry]
+Comment=Pick screen color and copy its hex code to the clipboard
+Exec=pikcolior -c
+GenericName=Screen color picker
+Icon=color-picker
+Name=Pikcolior
+NoDisplay=false
+StartupNotify=false
+Terminal=false
+Type=Application
+Categories=Graphics;Utility;
+Keywords=Color Picker;
+MimeType=
