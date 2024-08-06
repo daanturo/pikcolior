@@ -8,3 +8,5 @@ arboard = { version = "3.4.0", features = ["wayland-data-control"] }
 ashpd = "0.9.1"
 clap = { version = "4.5.13", features = ["derive"] }
 futures = "0.3.30"
+strum = "0.26.3"
+strum_macros = "0.26.4"

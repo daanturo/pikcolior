@@ -1,12 +1,12 @@
 
-APP_DIR= $(HOME)/.local/share/applications
+USER_APPS_DIR := $(HOME)/.local/share/applications
 
 
-all: binary desktop-entry
+install: install-binary install-desktop
 
-binary:
+install-binary:
 	cargo install --path .
 
-desktop-entry:
-	desktop-file-install --dir=$(APP_DIR) ./Pikcolior.desktop
-	chmod u+x $(APP_DIR)/Pikcolior.desktop
+install-desktop:
+	desktop-file-install --dir=$(USER_APPS_DIR) ./Pikcolior.desktop
+	chmod u+x $(USER_APPS_DIR)/Pikcolior.desktop
