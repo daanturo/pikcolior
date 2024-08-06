@@ -5,19 +5,11 @@
 
 # About
 
-```
-A simple CLI screen color picker that prints the color code.
+Run `pikcolior` to invoke the XDG color picker portal, then the #6-letter code will be printed. 
 
-Usage: pikcolior [OPTIONS]
+The `-c` option automatically copies the color code to your clipboard.
 
-Options:
-  -c, --copy             Copy to the clipboard
-  ...
-```
-
-Pikcolior works on Wayland. Just run the command to invoke the XDG color picker portal, then the #6-letter code will be printed. 
-
-The `-c` option automatically copies the color code for you to paste somewhere else.
+See more options by invoking [`pikcolior --help`](./target/doc/help-output).
 
 No fancy GUI, Pikcolior tries to stay out of your sight.
 
@@ -32,10 +24,11 @@ Make sure you have [Rust and Cargo](https://www.rust-lang.org/tools/install) ins
 git clone --depth=1 https://gitlab.com/daanturo/pikcolior --branch stable
 cd pikcolior
 
-make
+make install
 
 ```
 
+The above installs `pikcolior` to your [$CARGO_HOME/bin](https://doc.rust-lang.org/cargo/guide/cargo-home.html#directories) and a desktop entry to `~/.local/share/applications/`.
 
 # Notable dependencies
 

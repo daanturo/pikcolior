@@ -8,53 +8,71 @@ const HEX8_MAX: f64 = 0xFF as f64;
 const HEX16_MAX: f64 = 0xFFFF as f64;
 
 #[derive(Parser, Debug)]
-#[command(
-    version,
-    about = "A simple CLI screen color picker that prints the color code."
-)]
+#[command(version, about = "Pick screen color and print it.")]
 struct Cli {
     /// Copy to the clipboard
     #[arg(short, long, default_value_t = false)]
     copy: bool,
 
     /// Print format, can be repeated to print multiple formats separated by newlines
-    #[arg(short, long, default_values_t = vec![PrintFormat::Hex])]
+    #[arg(short, long, value_delimiter = ',', default_values_t = vec![PrintFormat::Hex])]
     format: Vec<PrintFormat>,
 
-    /// Uppercase ("u") or lowercase ("l")
+    /// "u": Uppercase/#RRGGBB or "l": lowercase/#rrggbb
     #[arg(long, default_value_t = String::from("u"))]
     case: String,
+
+    /// Rounding strategy when converting from the detected floating-point numbers, default: nearest
+    #[arg(short, long, default_value_t = RoundStrategy::N)]
+    round: RoundStrategy,
 }
 
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ValueEnum, Debug, strum_macros::Display)]
+#[strum(serialize_all = "snake_case")]
 enum PrintFormat {
     /// #RRGGBB
-    #[strum(to_string = "hex")]
     Hex,
     /// #RRRRGGGGBBBB
-    #[strum(to_string = "hex16")]
     Hex16,
     /// R.float G.float B.float
-    #[strum(to_string = "float")]
     Float,
 }
 
+#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ValueEnum, Debug, strum_macros::Display)]
+#[strum(serialize_all = "snake_case")]
+enum RoundStrategy {
+    /// Round to nearest
+    N,
+    /// Round up
+    U,
+    /// Round down
+    D,
+}
+
 fn color_codes(color: (f64, f64, f64), cli: &Cli) -> Vec<String> {
+    let (r, g, b) = color;
+    let rounder = |num: f64| {
+        (match cli.round {
+            RoundStrategy::N => num.round(),
+            RoundStrategy::U => num.ceil(),
+            RoundStrategy::D => num.floor(),
+        }) as u32
+    };
     cli.format
         .iter()
         .map(|fmt| match fmt {
             PrintFormat::Hex => format!(
                 "#{:02X}{:02X}{:02X}",
-                (color.0 * HEX8_MAX).round() as u32,
-                (color.1 * HEX8_MAX).round() as u32,
-                (color.2 * HEX8_MAX).round() as u32,
+                rounder(r * HEX8_MAX),
+                rounder(g * HEX8_MAX),
+                rounder(b * HEX8_MAX),
             ),
-            PrintFormat::Float => format!("{:?} {:?} {:?}", color.0, color.1, color.2),
+            PrintFormat::Float => format!("{:?} {:?} {:?}", r, g, b),
             PrintFormat::Hex16 => format!(
                 "#{:04X}{:04X}{:04X}",
-                (color.0 * HEX16_MAX).round() as u32,
-                (color.1 * HEX16_MAX).round() as u32,
-                (color.2 * HEX16_MAX).round() as u32,
+                rounder(r * HEX16_MAX),
+                rounder(g * HEX16_MAX),
+                rounder(b * HEX16_MAX),
             ),
         })
         .map(|str| {

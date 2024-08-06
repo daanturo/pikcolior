@@ -1,0 +1,38 @@
+Pick screen color and print it.
+
+Usage: pikcolior [OPTIONS]
+
+Options:
+  -c, --copy
+          Copy to the clipboard
+
+  -f, --format <FORMAT>
+          Print format, can be repeated to print multiple formats separated by newlines
+          
+          [default: hex]
+
+          Possible values:
+          - hex:   #RRGGBB
+          - hex16: #RRRRGGGGBBBB
+          - float: R.float G.float B.float
+
+      --case <CASE>
+          "u": Uppercase/#RRGGBB or "l": lowercase/#rrggbb
+          
+          [default: u]
+
+  -r, --round <ROUND>
+          Rounding strategy when converting from the detected floating-point numbers, default: nearest
+          
+          [default: n]
+
+          Possible values:
+          - n: Round to nearest
+          - u: Round up
+          - d: Round down
+
+  -h, --help
+          Print help (see a summary with '-h')
+
+  -V, --version
+          Print version
